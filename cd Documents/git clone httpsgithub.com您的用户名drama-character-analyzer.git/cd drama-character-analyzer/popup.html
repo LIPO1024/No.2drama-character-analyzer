@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>戏剧人物性格分析全能助手</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>戏剧人物分析全能助手</h1>
+      <p class="subtitle">优化AI提问，获取专业分析</p>
+    </header>
+    
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="basic">基础分析</button>
+      <button class="tab-btn" data-tab="advanced">高级设置</button>
+    </div>
+    
+    <div class="tab-content" id="basic-tab">
+      <div class="section">
+        <h2>1. 剧作类型</h2>
+        <select id="drama-type" class="full-width">
+          <option value="classical">古典悲剧/神话戏剧</option>
+          <option value="psychological" selected>现代心理剧</option>
+          <option value="postmodern">后现代/实验戏剧</option>
+          <option value="chinese">传统中国戏曲</option>
+          <option value="realistic">社会现实主义戏剧</option>
+          <option value="absurd">荒诞派戏剧</option>
+          <option value="epic">史诗剧场/叙事剧场</option>
+        </select>
+        <div class="tooltip" id="drama-type-info">?
+          <span class="tooltiptext">选择最符合您分析剧本的类型，这将决定使用哪些分析模型</span>
+        </div>
+      </div>
+      
+      <div class="section">
+        <h2>2. 分析需求</h2>
+        <select id="analysis-need" class="full-width">
+          <option value="character" selected>角色性格分析</option>
+          <option value="relationship">角色关系分析</option>
+          <option value="acting">表演指导建议</option>
+          <option value="development">角色发展弧线</option>
+          <option value="symbolic">象征意义解读</option>
+        </select>
+        <div class="tooltip" id="analysis-need-info">?
+          <span class="tooltiptext">您希望从哪个维度分析角色？这将决定分析的侧重点</span>
+        </div>
+      </div>
+      
+      <div class="section">
+        <h2>3. 角色信息</h2>
+        <div class="input-group">
+          <label for="character-name">角色名称:</label>
+          <input type="text" id="character-name" placeholder="例如: 哈姆雷特" class="full-width">
+        </div>
+        
+        <div class="input-group">
+          <label for="play-name">剧本名称:</label>
+          <input type="text" id="play-name" placeholder="例如: 哈姆雷特" class="full-width">
+        </div>
+        
+        <div class="input-group">
+          <label for="simple-question">您的分析问题:</label>
+          <textarea id="simple-question" placeholder="例如: 分析哈姆雷特的犹豫不决特性" class="full-width"></textarea>
+        </div>
+      </div>
+      
+      <div class="section">
+        <h2>4. 输出格式</h2>
+        <select id="output-format" class="full-width">
+          <option value="academic">学术型报告</option>
+          <option value="practical" selected>实用型指导</option>
+          <option value="creative">创意型分析</option>
+          <option value="comprehensive">综合型分析</option>
+        </select>
+        <div class="tooltip" id="output-format-info">?
+          <span class="tooltiptext">选择AI回答的风格和格式，满足不同的使用场景</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="tab-content hidden" id="advanced-tab">
+      <div class="section">
+        <h2>心理模型选择</h2>
+        <div class="checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="model-jungian" checked> 荣格原型理论
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="model-freudian"> 弗洛伊德精神分析
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="model-bigfive" checked> 五因素人格模型
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="model-adlerian"> 阿德勒个体心理学
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="model-dramaticaction" checked> 戏剧行动模型
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="model-attachment"> 依恋理论
+          </label>
+        </div>
+      </div>
+      
+      <div class="section">
+        <h2>提问深度</h2>
+        <div class="slider-container">
+          <input type="range" min="1" max="5" value="3" class="slider" id="depth-slider">
+          <div class="slider-labels">
+            <span>简洁</span>
+            <span>标准</span>
+            <span>详尽</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="section">
+        <h2>语言风格</h2>
+        <select id="language-style" class="full-width">
+          <option value="formal">学术正式</option>
+          <option value="professional" selected>专业实用</option>
+          <option value="creative">创意启发</option>
+          <option value="simple">简明易懂</option>
+        </select>
+      </div>
+      
+      <div class="section">
+        <h2>保存设置</h2>
+        <button id="save-settings" class="secondary-btn">保存为默认设置</button>
+        <button id="reset-settings" class="secondary-btn">重置为初始设置</button>
+      </div>
+    </div>
+    
+    <div class="action-buttons">
+      <button id="generate-btn" class="primary-btn">生成专业提问</button>
+    </div>
+    
+    <div class="result-section hidden" id="result-section">
+      <h2>生成的专业提问</h2>
+      <div id="result-container" class="result-box"></div>
+      <div class="result-actions">
+        <button id="copy-btn" class="action-btn">复制到剪贴板</button>
+        <button id="inject-btn" class="action-btn">直接发送到AI</button>
+      </div>
+    </div>
+    
+    <footer>
+      <p>版本 1.0 | <a href="https://github.com/您的用户名/drama-character-analyzer" target="_blank">GitHub</a></p>
+    </footer>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>
